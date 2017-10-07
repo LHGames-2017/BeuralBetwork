@@ -10,6 +10,7 @@
     {
         AIHelper player = new AIHelper();
         GameInfo gameInfo;
+        bool goingHome = false;
 
         [HttpPost]
         public string Index([FromForm]string map)
@@ -22,8 +23,56 @@
             Tile closestResource = FindClosest(TileContent.Resource, carte);
             Point nextPoint = GoToDestination(closestResource);
 
-            string action = AIHelper.CreateMoveAction(nextPoint);
+
+
+
+            string action;
+            if(IsNearTile(closestResource))
+            {
+                if (gameInfo.Player.CarriedResources < gameInfo.Player.CarryingCapacity)
+                {
+                    action = AIHelper.CreateCollectAction(nextPoint);
+                }
+                else
+                {
+                    goingHome = false;
+                }
+            }
+            else
+            {
+               action = AIHelper.CreateMoveAction(nextPoint);
+            }
+
+            if(goingHome)
+            {
+                nextPoint = GoToDestination(gameInfo.Player.HouseLocation);
+                if (IsSameTile(gameInfo.Player.HouseLocation))
+                {
+                    goingHome = false;
+                }
+                else
+                {
+                    action = AIHelper.CreateMoveAction(nextPoint);
+                }
+            }
+
             return action;
+        }
+
+        bool IsSameTile(Tile tile)
+        {
+            if (gameInfo.Player.Position.X == tile.X && gameInfo.Player.Position.Y == tile.Y)
+                return true;
+            else
+                return false;
+        }
+
+        bool IsNearTile(Tile tile)
+        {
+            if (Math.Abs(gameInfo.Player.Position.X - tile.X) <= 1 && Math.Abs(gameInfo.Player.Position.Y - tile.Y) <= 1)
+                return true;
+
+            return false;
         }
 
         Tile FindClosest(TileContent content, Tile[,] tiles)
