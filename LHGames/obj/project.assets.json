@@ -8,7 +8,7 @@
     ".NETCoreApp,Version=v2.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Dominic\\.nuget\\packages\\": {}
+    "C:\\Users\\Émile\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -16,14 +16,14 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\Dominic\\Documents\\LHGames\\mySolution\\BeuralBetwork\\LHGames\\LHGames.csproj",
+      "projectUniqueName": "C:\\Users\\Émile\\Documents\\LHGames\\mySolution\\BeuralBetwork\\LHGames\\LHGames.csproj",
       "projectName": "LHGames",
-      "projectPath": "C:\\Users\\Dominic\\Documents\\LHGames\\mySolution\\BeuralBetwork\\LHGames\\LHGames.csproj",
-      "packagesPath": "C:\\Users\\Dominic\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Dominic\\Documents\\LHGames\\mySolution\\BeuralBetwork\\LHGames\\obj\\",
+      "projectPath": "C:\\Users\\Émile\\Documents\\LHGames\\mySolution\\BeuralBetwork\\LHGames\\LHGames.csproj",
+      "packagesPath": "C:\\Users\\Émile\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Émile\\Documents\\LHGames\\mySolution\\BeuralBetwork\\LHGames\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Dominic\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Émile\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
