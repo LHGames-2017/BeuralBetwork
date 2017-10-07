@@ -60,7 +60,7 @@ public class GameController : Controller
         for (int x = 0; x < tiles.GetLength(0); x++)
         {
             for (int y = 0; y < tiles.GetLength(1); y++)
-            {      
+            {
                 Tile currentTile = tiles[x, y];
                 if ((byte)content != currentTile.C)
                     continue;
@@ -72,26 +72,7 @@ public class GameController : Controller
                     closestTile = currentTile;
                 }
             }
-            //action = AIHelper.CreateMoveAction(new Point(gameInfo.Player.Position.X,gameInfo.Player.Position.Y+1));
-            Console.WriteLine(action);
-            Console.WriteLine(goingHome + "is going home");
-            return action;
-        }
-
-        bool IsSameTile(Point tile)
-        {
-            if (gameInfo.Player.Position.X == tile.X && gameInfo.Player.Position.Y == tile.Y)
-                return true;
-            else
-                return false;
-        }
-
-        bool IsSameTile(Tile tile)
-        {
-            if (gameInfo.Player.Position.X == tile.X && gameInfo.Player.Position.Y == tile.Y)
-                return true;
-            else
-                return false;
+            
         }
         return closestTile;
     }
@@ -108,13 +89,13 @@ public class GameController : Controller
 
         if (Math.Abs(dx) <= Math.Abs(dy))
         {
-                if (dy < 0)
-                {
-                    nextPoint = new Point(gameInfo.Player.Position.X, gameInfo.Player.Position.Y + 1);
-                }
+            if (dy < 0)
+            {
+                nextPoint = new Point(gameInfo.Player.Position.X, gameInfo.Player.Position.Y + 1);
+            }
             else if (dy > 0)
             {
-                    nextPoint = new Point(gameInfo.Player.Position.X, gameInfo.Player.Position.Y - 1);
+                nextPoint = new Point(gameInfo.Player.Position.X, gameInfo.Player.Position.Y - 1);
             }
         }
         else
