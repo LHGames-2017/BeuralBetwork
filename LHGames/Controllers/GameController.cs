@@ -22,11 +22,8 @@
 
             Tile closestResource = FindClosest(TileContent.Resource, carte);
             Point nextPoint = GoToDestination(closestResource);
+            string action = AIHelper.CreateMoveAction(nextPoint);
 
-
-
-
-            string action;
             if(IsNearTile(closestResource))
             {
                 if (gameInfo.Player.CarriedResources < gameInfo.Player.CarryingCapacity)
@@ -59,6 +56,14 @@
             return action;
         }
 
+        bool IsSameTile(Point tile)
+        {
+            if (gameInfo.Player.Position.X == tile.X && gameInfo.Player.Position.Y == tile.Y)
+                return true;
+            else
+                return false;
+        }
+
         bool IsSameTile(Tile tile)
         {
             if (gameInfo.Player.Position.X == tile.X && gameInfo.Player.Position.Y == tile.Y)
@@ -78,14 +83,14 @@
         Tile FindClosest(TileContent content, Tile[,] tiles)
         {
             Tile closestTile = tiles[0, 0];
-            int minDistance = Integer.MaxValue;
+            int minDistance = int.MaxValue;
 
-            for (int x = 0; x < tiles.length; x++)
+            for (int x = 0; x < tiles.GetLength(0); x++)
             {
-                for (int x = 0; x < tiles.length; x++)
+                for (int y = 0; y < tiles.GetLength(1); x++)
                 {
                     Tile currentTile = tiles[x, y];
-                    int distance = Math.Abs(current.x - gameInfo.Player.Position.x) + Math.Abs(current.y - gameInfo.Player.Position.y);
+                    int distance = Math.Abs(currentTile.X - gameInfo.Player.Position.X) + Math.Abs(currentTile.Y - gameInfo.Player.Position.Y);
                     if (distance < minDistance)
                     {
                         minDistance = distance;
@@ -98,17 +103,17 @@
 
         Point GoToDestination(Tile destination)
         {
-            return (new Point(destination.x, destination, y));
+            return (new Point(destination.X, destination.Y));
         }
         Point GoToDestination(Point destination)
         {
-            int dx = current.x - gameInfo.Player.Position.x;
-            int dy = current.y - gameInfo.Player.Position.y;
-            Point nextPoint;
+            int dx = destination.X - gameInfo.Player.Position.X;
+            int dy = destination.Y - gameInfo.Player.Position.Y;
+            Point nextPoint = new Point(0,0);
 
             if (dx > 0)
             {
-
+               
             }
             else if (dx < 0)
             {
