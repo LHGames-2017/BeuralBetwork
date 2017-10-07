@@ -21,7 +21,7 @@ public class GameController : Controller
         carte = AIHelper.DeserializeMap(gameInfo.CustomSerializedMap);
         // INSERT AI CODE HERE.
         string action = ai.ReturnAction(gameInfo);
-
+      //  action = AIHelper.CreateMoveAction(new Point(26,27));
         Console.WriteLine(action);
         return action;
     }

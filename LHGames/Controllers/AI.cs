@@ -20,8 +20,13 @@ public class AI
     {
         if (gameInfo.Player.totalResources >= 15000)
         {
+            
             Console.WriteLine("SHOPPING");
             currentState = shoppingState;
+            if (gameInfo.Player.Position == gameInfo.Player.HouseLocation)
+                return AIHelper.CreateMoveAction(
+                    new Point(gameInfo.Player.Position.X, gameInfo.Player.Position.Y)
+                    );
         }
         else
         {
