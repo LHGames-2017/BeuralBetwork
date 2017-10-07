@@ -43,7 +43,7 @@
                     goingHome = false;
                 }
             }
-            action = AIHelper.CreateMoveAction(new Point(gameInfo.Player.Position.X,gameInfo.Player.Position.Y+1));
+            //action = AIHelper.CreateMoveAction(new Point(gameInfo.Player.Position.X,gameInfo.Player.Position.Y+1));
             Console.WriteLine(action);
             Console.WriteLine(goingHome + "is going home");
             return action;
