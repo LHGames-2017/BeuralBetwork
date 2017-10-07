@@ -87,6 +87,7 @@ public class GameController : Controller
         int dy = gameInfo.Player.Position.Y - destination.Y;
         Point nextPoint = gameInfo.Player.Position;
 
+        /*
         if (Math.Abs(dx) <= Math.Abs(dy))
         {
             if (dy < 0)
@@ -108,7 +109,26 @@ public class GameController : Controller
             {
                 nextPoint = new Point(gameInfo.Player.Position.X - 1, gameInfo.Player.Position.Y);
             }
+        }*/
+
+
+        if (dx < 0)
+        {
+            nextPoint = new Point(gameInfo.Player.Position.X + 1, gameInfo.Player.Position.Y);
         }
+        else if (dx > 0)
+        {
+            nextPoint = new Point(gameInfo.Player.Position.X - 1, gameInfo.Player.Position.Y);
+        }
+        else if (dy < 0)
+        {
+            nextPoint = new Point(gameInfo.Player.Position.X, gameInfo.Player.Position.Y + 1);
+        }
+        else if (dy > 0)
+        {
+            nextPoint = new Point(gameInfo.Player.Position.X, gameInfo.Player.Position.Y - 1);
+        }
+
         return nextPoint;
     }
 
