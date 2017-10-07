@@ -20,12 +20,12 @@ gnore Visual Studio temporary files, build results, and
 x64/
 x86/
 bld/
-[Bb]in/
-[Oo]bj/
+LHGames/[Bb]in/
+LHGames/[Oo]bj/
 [Ll]og/
 
 # Visual Studio 2015 cache/options directory
-.vs/
+LHGames/.vs/
 # Uncomment if you have tasks that create the project's static files in wwwroot
 #wwwroot/
 
