@@ -107,24 +107,32 @@
         }
         Point GoToDestination(Point destination)
         {
-            int dx = destination.X - gameInfo.Player.Position.X;
-            int dy = destination.Y - gameInfo.Player.Position.Y;
-            Point nextPoint = new Point(0,0);
+            int dx = gameInfo.Player.Position.X - destination.X;
+            int dy = gameInfo.Player.Position.Y - destination.Y;
+            Point nextPoint = gameInfo.Player.Position;
 
-            if (dx > 0)
+            if (Math.Abs(dx) < Math.Abs(dy))
             {
-               
-            }
-            else if (dx < 0)
-            {
+                if (dx < 0)
+                {
+                    nextPoint = new Point(gameInfo.Player.Position.X + 1, gameInfo.Player.Position.Y);
+                }
+                else
+                {
+                    nextPoint = new Point(gameInfo.Player.Position.X - 1, gameInfo.Player.Position.Y);
+                }
 
             }
-            if (dy > 0)
+            else
             {
-
-            }
-            else if (dy < 0)
-            {
+                if (dx < 0)
+                {
+                    nextPoint = new Point(gameInfo.Player.Position.X, gameInfo.Player.Position.Y + 1);
+                }
+                else
+                {
+                    nextPoint = new Point(gameInfo.Player.Position.X, gameInfo.Player.Position.Y - 1);
+                }
 
             }
             return nextPoint;
