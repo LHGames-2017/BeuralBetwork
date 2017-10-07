@@ -72,6 +72,26 @@ public class GameController : Controller
                     closestTile = currentTile;
                 }
             }
+            //action = AIHelper.CreateMoveAction(new Point(gameInfo.Player.Position.X,gameInfo.Player.Position.Y+1));
+            Console.WriteLine(action);
+            Console.WriteLine(goingHome + "is going home");
+            return action;
+        }
+
+        bool IsSameTile(Point tile)
+        {
+            if (gameInfo.Player.Position.X == tile.X && gameInfo.Player.Position.Y == tile.Y)
+                return true;
+            else
+                return false;
+        }
+
+        bool IsSameTile(Tile tile)
+        {
+            if (gameInfo.Player.Position.X == tile.X && gameInfo.Player.Position.Y == tile.Y)
+                return true;
+            else
+                return false;
         }
         return closestTile;
     }
