@@ -54,7 +54,7 @@ public class ShoppingState : State
              levelSpeed++;
         }
         
-        if(gameInfo.Player.CarryingCapacity == 1000)
+        else if(gameInfo.Player.CarryingCapacity == 1000)
         {
             action = AIHelper.CreateUpgradeAction(UpgradeType.CarryingCapacity);
             levelCarry++;

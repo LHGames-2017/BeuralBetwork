@@ -18,7 +18,7 @@ public class AI
 
     public string ReturnAction(GameInfo gameInfo)
     {
-        if (gameInfo.Player.totalResources >= 50000)
+        if (gameInfo.Player.totalResources >= 15000)
         {
             
             Console.WriteLine("SHOPPING");
