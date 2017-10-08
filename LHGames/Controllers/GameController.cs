@@ -19,9 +19,9 @@ public class GameController : Controller
     {
         GameController.gameInfo = JsonConvert.DeserializeObject<GameInfo>(map);
         carte = AIHelper.DeserializeMap(gameInfo.CustomSerializedMap);
-        // INSERT AI CODE HERE.
+
         string action = ai.ReturnAction(gameInfo);
-      //  action = AIHelper.CreateMoveAction(new Point(26,27));
+     
         Console.WriteLine(action);
         return action;
     }
@@ -87,31 +87,6 @@ public class GameController : Controller
         int dy = gameInfo.Player.Position.Y - destination.Y;
         Point nextPoint = gameInfo.Player.Position;
 
-        /*
-        if (Math.Abs(dx) <= Math.Abs(dy))
-        {
-            if (dy < 0)
-            {
-                nextPoint = new Point(gameInfo.Player.Position.X, gameInfo.Player.Position.Y + 1);
-            }
-            else if (dy > 0)
-            {
-                nextPoint = new Point(gameInfo.Player.Position.X, gameInfo.Player.Position.Y - 1);
-            }
-        }
-        else
-        {
-            if (dx < 0)
-            {
-                nextPoint = new Point(gameInfo.Player.Position.X + 1, gameInfo.Player.Position.Y);
-            }
-            else if (dx > 0)
-            {
-                nextPoint = new Point(gameInfo.Player.Position.X - 1, gameInfo.Player.Position.Y);
-            }
-        }*/
-
-
         if (dx < 0)
         {
             nextPoint = new Point(gameInfo.Player.Position.X + 1, gameInfo.Player.Position.Y);
@@ -132,4 +107,123 @@ public class GameController : Controller
         return nextPoint;
     }
 
+    static ScoredTileList GetAdjacentTiles(Point destination, Tile[,] map, int iX, int iY, ScoredTile previous)
+    {
+        ScoredTileList list = new ScoredTileList();
+        if ((TileContent)map[iX + 1, iY].C == TileContent.Empty)
+        {
+            int distanceTileUp = destination.X - map[iX + 1, iY].X + destination.Y - map[iX + 1, iY].Y;
+            ScoredTile sTile = new ScoredTile(map[iX + 1, iY], distanceTileUp);
+            sTile.previous = previous;
+            list.Add(sTile);
+        }
+        else if ((TileContent)map[iX, iY - 1].C == TileContent.Empty)
+        {
+            int distanceTileLeft = destination.X - map[iX, iY - 1].X + destination.Y - map[iX, iY - 1].Y;
+            ScoredTile sTile2 = new ScoredTile(map[iX, iY - 1], distanceTileLeft);
+            sTile2.previous = previous;
+            list.Add(sTile2);
+        }
+        else if ((TileContent)map[iX - 1, iY].C == TileContent.Empty)
+        {
+            int distanceTileDown = destination.X - map[iX - 1, iY].X + destination.Y - map[iX - 1, iY].Y;
+            ScoredTile sTile3 = new ScoredTile(map[iX - 1, iY], distanceTileDown);
+            sTile3.previous = previous;
+            list.Add(sTile3);
+        }
+        else if ((TileContent)map[iX, iY + 1].C == TileContent.Empty)
+        {
+            int distanceTileRight = destination.X - map[iX, iY + 1].X + destination.Y - map[iX, iY + 1].Y;
+            ScoredTile sTile4 = new ScoredTile(map[iX, iY + 1], distanceTileRight);
+            sTile4.previous = previous;
+            list.Add(sTile4);
+        }
+
+        return list;
+    }
+
+    public static List<Tile> GetPath(Point destination, Tile[,] map)
+    {
+        int dx = gameInfo.Player.Position.X - destination.X;
+        int dy = gameInfo.Player.Position.Y - destination.Y;
+        int iX = 0;
+        int iY = 0;
+        Point nextPoint = gameInfo.Player.Position;
+        List<Tile> returnedList = new List<Tile>();
+        for (int i = 0; i < map.GetLength(0); i++)
+        {
+            for (int j = 0; j < map.GetLength(1); j++)
+            {
+                if (map[i, j].X == gameInfo.Player.Position.X && map[i, j].Y == gameInfo.Player.Position.Y)
+                {
+                    iX = i;
+                    iY = j;
+                }
+            }
+        }
+        ScoredTileList tiles = new ScoredTileList();
+        List<ScoredTile> closedNodes = new List<ScoredTile>();
+        tiles.Add(new ScoredTile(map[iX, iY], 0));
+        int t = 100;
+        while (tiles.Count != 0 && --t > 0)
+        {
+            tiles.SortList();
+            ScoredTile n = tiles.Pop();
+            if (n.tile.X == destination.X && n.tile.Y == destination.Y)
+                return RetracePath(tiles);
+
+            ScoredTileList l = GetAdjacentTiles(destination, map, iX, iY, n);
+            l.SortList();
+            foreach (ScoredTile sT in l)
+            {
+                tiles.Add(sT);
+            }
+        }
+        return RetracePath(tiles);
+    }
+
+    public static List<Tile> RetracePath(ScoredTileList tiles)
+    {
+        List<Tile> rTiles = new List<Tile>();
+        ScoredTile currentTile = tiles[tiles.Count - 1];
+        rTiles.Add(currentTile.tile);
+        while (currentTile.previous != null)
+        {
+            rTiles.Add(currentTile.previous.tile);
+            currentTile = currentTile.previous;
+        }
+        return rTiles;
+    }
+    public class ScoredTileList : List<ScoredTile>
+    {
+        public ScoredTile Pop()
+        {
+            ScoredTile tile = this[0];
+            this.RemoveAt(0);
+            return tile;
+        }
+
+        public void SortList()
+        {
+            this.Sort(delegate (ScoredTile x, ScoredTile y)
+            {
+                if (x.score == y.score) return 0;
+                else if (x.score > y.score) return -1;
+                else return 1;
+            });
+        }
+    }
+
+    public class ScoredTile
+    {
+        public Tile tile;
+        public int score;
+        public ScoredTile previous;
+
+        public ScoredTile(Tile tile, int score)
+        {
+            this.tile = tile;
+            this.score = score;
+        }
+    }
 }
